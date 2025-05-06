@@ -7,9 +7,14 @@ const Message = ({ message }) => {
 	const { selectedConversation } = useConversation();
 
 	const isGroup = selectedConversation?.isGroup;
-	const fromMe = message.senderId._id === authUser._id;
+	const fromMe =
+  typeof message.senderId === "string"
+    ? message.senderId === authUser._id
+    : message.senderId._id === authUser._id;
+
+const chatClassName = fromMe ? "chat-end" : "chat-start";
+
 	const formattedTime = extractTime(message.createdAt);
-	const chatClassName = fromMe ? "chat-end" : "chat-start";
 	const shakeClass = message.shouldShake ? "shake" : "";
 
 	const sender = isGroup ? message.senderId : null;
@@ -25,11 +30,6 @@ const Message = ({ message }) => {
 			)}
 
 			<div className={`chat-bubble font-bold bg-white text-emerald-800 ${shakeClass}`}>
-				{isGroup && sender && (
-					<div className="text-xs font-semibold text-gray-500 mb-1 bg-black ">
-						{sender.name}
-					</div>
-				)}
 				{message.message}
 			</div>
 
