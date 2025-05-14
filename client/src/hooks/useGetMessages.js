@@ -15,7 +15,7 @@ const useGetMessages = () => {
 				
 				if (data.error) throw new Error(data.error);
 
-				// ✅ Defensive: ensure array
+
 				if (Array.isArray(data)) {
 					setMessages(data);
 				} else {
@@ -24,7 +24,7 @@ const useGetMessages = () => {
 				}
 			} catch (error) {
 				toast.error(error.message);
-				setMessages([]); // fallback in case of error
+				setMessages([]); 
 			} finally {
 				setLoading(false);
 			}
