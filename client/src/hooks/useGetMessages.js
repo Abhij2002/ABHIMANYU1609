@@ -12,18 +12,28 @@ const useGetMessages = () => {
 			try {
 				const res = await fetch(`/api/messages/${selectedConversation._id}`);
 				const data = await res.json();
+				
 				if (data.error) throw new Error(data.error);
-				setMessages(data);
+
+				// ✅ Defensive: ensure array
+				if (Array.isArray(data)) {
+					setMessages(data);
+				} else {
+					console.warn("Expected array of messages but got:", data);
+					setMessages([]); // fallback
+				}
 			} catch (error) {
 				toast.error(error.message);
+				setMessages([]); // fallback in case of error
 			} finally {
 				setLoading(false);
 			}
-		};		
+		};
 
 		if (selectedConversation?._id) getMessages();
 	}, [selectedConversation?._id, setMessages]);
 
-	return { messages, loading };
+	return { messages: messages ?? [], loading };
 };
+
 export default useGetMessages;
