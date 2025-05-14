@@ -32,7 +32,6 @@ const useListenMessages = () => {
 					console.error("Audio error:", err);
 				}
 
-				// ✅ Ensure `prev` is always array
 				setMessages((prev = []) => [...prev, newMessage]);
 			}
 		},
