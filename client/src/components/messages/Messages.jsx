@@ -23,7 +23,6 @@ const Messages = () => {
 				[&::-webkit-scrollbar-thumb]:bg-emerald-800
 				bg-[url(../../../../../public/5.jpg)]'
 		>
-			{/* ✅ Defensive: Only render messages if it's a non-empty array */}
 			{!loading && Array.isArray(messages) && messages.length > 0 &&
 				messages.map((message, index) => (
 					<div key={message._id} ref={index === messages.length - 1 ? lastMessageRef : null}>
@@ -32,12 +31,12 @@ const Messages = () => {
 				))
 			}
 
-			{/* ✅ Fallback if messages is empty or invalid */}
+			
 			{!loading && (!Array.isArray(messages) || messages.length === 0) && (
 				<p className="text-center text-gray-500 py-4">No messages yet.</p>
 			)}
 
-			{/* ✅ Loading Skeletons */}
+			
 			{loading &&
 				[...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)
 			}
